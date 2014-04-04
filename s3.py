@@ -241,6 +241,10 @@ def config_hook(conduit):
     config.RepoConf.s3_enabled = config.BoolOption(False)
     config.RepoConf.key_id = config.Option() or conduit.confString('main', 'aws_access_key_id')
     config.RepoConf.secret_key = config.Option() or conduit.confString('main', 'aws_secret_access_key')
+    proxy = conduit.confString('main', 'proxy')
+    if proxy:
+      os.environ['https_proxy'] = proxy
+      os.environ['http_proxy'] = proxy
 
 def prereposetup_hook(conduit):
     """
